@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="player" style="position: absolute; top: -9999px; left: -9999px;"></div>
+<script src="http://www.youtube.com/player_api"></script>
+<script>
+var player;
+function DoMusic(song) {
+  var vid = (song == 1 ? '0iCLM6I_ejU' : '0iCLM6I_ejU')
+  if (player) {
+    player.loadVideoById(vid,(song == 1 ? 50 : 1));
+    player.playVideo();
+  } else {
+    player = new YT.Player('player', {
+        videoId: vid,
+        loop: true,
+        events: {
+            onReady: function (e) {
+                e.target.playVideo();
+                if (song == 1) {
+                  e.target.seekTo(1);
+                }
+            }
+        }
+    });
+  }
+}
+
+function DoMusiciki(song) {
+  var vid = (song == 2 ? '5RX_pKC0QF4' : '5RX_pKC0QF4')
+  if (player) {
+    player.loadVideoById(vid,(song == 2 ? 50 : 1));
+    player.playVideo();
+  } else {
+    player = new YT.Player('player', {
+        videoId: vid,
+        loop: true,
+        events: {
+            onReady: function (e) {
+                e.target.playVideo();
+                if (song == 2) {
+                  e.target.seekTo(1);
+                }
+            }
+        }
+    });
+  }
+}
+
+function DoMusicuc(song) {
+  var vid = (song == 3 ? 'tN45tS2W3lk' : 'tN45tS2W3lk')
+  if (player) {
+    player.loadVideoById(vid,(song == 3 ? 50 : 1));
+    player.playVideo();
+  } else {
+    player = new YT.Player('player', {
+        videoId: vid,
+        loop: true,
+        events: {
+            onReady: function (e) {
+                e.target.playVideo();
+                if (song == 3) {
+                  e.target.seekTo(1);
+                }
+            }
+        }
+    });
+  }
+}
+
+$(function() {
+  window.addEventListener('message', function(event) {
+    if (event.data.type == "playMusic") {
+      DoMusic(event.data.song);
+    } else if (event.data.type == "playMusiciki") {
+      DoMusiciki(event.data.song);
+    } else if (event.data.type == "playMusicuc") {
+      DoMusicuc(event.data.song); 
+    } else if (event.data.type == "stopMusic") {
+      player.pauseVideo(); 
+    }
+  });
+});
+</script>
+</body>
+</html>
